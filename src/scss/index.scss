@@ -1,0 +1,15 @@
+@import 'core/reset.scss';
+@import 'core/fonts.scss';
+@import 'core/variables.scss';
+@import 'core/media-queryes.scss';
+@import 'core/mixin.scss';
+@import 'core/buttons.scss';
+
+body {
+  font-family: 'Proxima Nova', sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+  background-color: $bg-color;
+
+}
