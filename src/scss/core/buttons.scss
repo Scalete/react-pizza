@@ -1,5 +1,76 @@
 @import './variables.scss';
+@import './mixin.scss';
 
 .action {
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: background-color $fast;
+
+    &.cart {
+        min-width: 150px;
+        padding: 0 20px;
+        height: 50px;
+        color: $white;
+        background-color: $main-color;
+
+        .price {
+            margin-right: 13px;
+            padding-right: 13px;
+            border-right: 1px solid rgba(255, 255, 255, 0.25);;
+        }
+
+        .count {
+            padding-left: 8px;
+        }
+
+        @include hover {
+            background-color: $cart-hover-color;
+        }
+    }
+
+    &.product {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        padding: 11px 14px 14px 17px;
+        font-size: 16px;
+        color: $main-color;
+        border: 1px solid $main-color;
+        border-radius: 30px;
+        transition: background-color $fast, color $fast;
+        cursor: pointer;
+
+        i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 22px;
+            height: 22px;
+            font-size: 13px;
+            border-radius: 40px;
+            background-color: $main-color;
+            color: $white;
+        }
+
+        span {
+            padding: 0 8px;
+        }
+
+        @include hover {
+            background-color: $main-color;
+            color: $white;
+
+            i {
+                background-color: $white;
+                color: $main-color;
+            }
+
+            svg path {
+                fill: $white;
+            }
+        }
+    }
 }

@@ -1,0 +1,38 @@
+.products {
+    padding: 0 res(10, 48) 96px res(10, 67);
+
+    &-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 35px;
+    }
+
+    &-title {
+        font-size: 32px;
+        letter-spacing: 0.01em;
+    }
+
+    &-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-column-gap: 35px;
+        grid-row-gap: 65px;
+    }
+
+    @include mobile {
+        &-heading {
+            flex-direction: column;
+        }
+
+        &-title {
+            margin-bottom: 10px;
+        }
+
+        &-wrapper {
+            justify-content: center;
+            grid-template-columns: 280px;
+            grid-row-gap: 50px;
+        }
+    }
+}
