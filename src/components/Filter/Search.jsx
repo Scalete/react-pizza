@@ -1,16 +1,6 @@
 import React from 'react'
 
-export function Search() {
-
-    const [searchValue, setSearchValue] = React.useState('');
-    
-    const onSearchInput = (e) => {
-        setSearchValue(e.target.value);
-    };
-
-    const onClearSearch = (e) => {
-        setSearchValue('');
-    };
+export function Search({onClearSearch, onSearchInput, searchValue}) {
 
     return (
         <div className="search">

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: res(30, 40) res(18, 48) 32px res(38, 67);
+    padding: res(30, 40) res(18, 48) 32px res(18, 67);
 
     @include mobile {
         flex-direction: column-reverse;
@@ -173,7 +173,7 @@
                 height: 9px;
             }
 
-            @include hover {
+            &:hover {
                 + .sort-list {
                     opacity: 1;
                     visibility: visible;
