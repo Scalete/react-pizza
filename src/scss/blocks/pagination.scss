@@ -1,0 +1,51 @@
+.pagination {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+
+    &-item {
+        margin-right: 20px;
+        
+        &.selected {
+            color: $white;
+            background-color: $main-color;
+        }
+    }
+
+    li.previous {
+        margin-right: 20px;
+    }
+
+    li.disabled {
+        cursor: auto;
+        opacity: 0.4;
+
+        @include hover {
+            color: $main-color;
+            background-color: $white;
+        }
+    }
+
+    li {
+        font-size: 16px;
+        line-height: 1;
+        border: 1px solid $main-color;
+        border-radius: 40px;
+        color: $main-color;
+        cursor: pointer;
+        transition: color $fast, background-color $fast;
+        user-select: none;
+
+        a {
+            display: block;
+            padding: 10px 13px;
+        }
+
+        @include hover {
+            color: $white;
+            background-color: $main-color;
+        }
+    }
+}

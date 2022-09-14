@@ -1,87 +1,87 @@
-import React from 'react'
+import React from 'react';
 import { Category } from '../components/Filter/Category';
 import { Search } from '../components/Filter/Search';
 import { Sort } from '../components/Filter/Sort';
 import { Product } from '../components/Product';
 import { Skeleton } from '../components/Skeleton';
+import { Pagination } from '../components/Pagination';
 
-import axios from 'axios'
+import { useSelector } from 'react-redux';
+
+import axios from 'axios';
 
 export function Main() {
-
   const [products, setProducts] = React.useState([]);
-  const [searchValue, setSearchValue] = React.useState('');
-  const [activeCategory, setActiveCategory] = React.useState(0);
-  const [sortDataActive, setSortDataActive] = React.useState(0);
-  const [sortFilterActive, setSortFilterActive] = React.useState(0);
   const [onLoading, setOnLoading] = React.useState(true);
+
+  const { categoryId, sortId, orderId, currentPagination, searchValue } = useSelector((state) => state.filter);
+  
 
   React.useEffect(() => {
     async function fetchData() {
-      const pizzas = await axios.get(`https://6314d07efa82b738f74eb750.mockapi.io/items?category=${activeCategory === 0?'':activeCategory}&sortBy=${renderSortDataParam()}&order=${renderSortDataFilterParam()}` );
+      const pizzas = await axios.get(
+        `https://6314d07efa82b738f74eb750.mockapi.io/items?category=${
+          categoryId === 0 ? '' : categoryId
+        }&sortBy=${renderSortDataParam()}&order=${renderSortOrder()}&page=${currentPagination}&limit=4`,
+      );
       setProducts(pizzas.data);
       setOnLoading(false);
     }
 
     const renderSortDataParam = () => {
       const sortData = {
-        0: "rating",
-        1: "price",
-        2: "name",
-      }
-  
-      return sortData[sortDataActive];
-    }
+        0: 'rating',
+        1: 'price',
+        2: 'name',
+      };
 
-    const renderSortDataFilterParam = () => {
-      const sortFilter = {
-        0: "desc",
-        1: "asc",
-      }
-  
-      return sortFilter[sortFilterActive];
-    }
+      return sortData[sortId];
+    };
+
+    const renderSortOrder = () => {
+      const sortOrder = {
+        0: 'desc',
+        1: 'asc',
+      };
+
+      return sortOrder[orderId];
+    };
 
     fetchData();
-
-  }, [activeCategory, sortDataActive, sortFilterActive]);
+  }, [categoryId, sortId, orderId, currentPagination]);
 
   const renderProducts = () => {
-    return products.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) => <Product key={index} title={item.name} types={item.types} sizes={item.sizes} price={item.price}/>);
-  }
+    return products
+      .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+      .map((item, index) => (
+        <Product
+          key={index}
+          title={item.name}
+          types={item.types}
+          sizes={item.sizes}
+          price={item.price}
+        />
+      ));
+  };
 
   const renderSkeleton = () => {
-    return [...Array(6)].map((item, i) => <Skeleton key={i}/>);
-  }
-
-  const onSearchInput = (e) => {
-    setSearchValue(e.target.value);
+    return [...Array(6)].map((item, i) => <Skeleton key={i} />);
   };
-
-  const onClearSearch = () => {
-    setSearchValue('');
-  };
-
-  const onClickCategory = (index, setActiveMobileCategory) => {
-    setActiveCategory(index);
-    setActiveMobileCategory(false);
-  }
 
   return (
     <>
       <div className="filters">
-          <Category onClickCategory={onClickCategory} activeCategory={activeCategory} />
-          <Sort sortDataActive={sortDataActive} setSortDataActive={setSortDataActive} sortFilterActive={sortFilterActive} setSortFilterActive={setSortFilterActive}/>
+        <Category />
+        <Sort />
       </div>
       <div className="products">
         <div className="products-heading">
           <h1 className="products-title">Все пиццы</h1>
-          <Search onClearSearch={onClearSearch} onSearchInput={onSearchInput} searchValue={searchValue}/>
+          <Search />
         </div>
-        <div className="products-wrapper">
-          {onLoading?renderSkeleton():renderProducts()}
-        </div>
+        <div className="products-wrapper">{onLoading ? renderSkeleton() : renderProducts()}</div>
+        <Pagination />
       </div>
     </>
-  )
+  );
 }
