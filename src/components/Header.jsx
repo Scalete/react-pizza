@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../assets/icons/logo.png';
+import { Link } from "react-router-dom";
 
 export function Header() {
   return (
@@ -13,8 +14,8 @@ export function Header() {
           </div>
         </div>
         <div className="header-cart">
-          <a className="action cart" href="#">
-            <span className="price">500 $</span>
+          <Link className="action cart" to="react-pizza/cart">
+          <span className="price">500 $</span>
             <svg
               width="18"
               height="18"
@@ -29,8 +30,8 @@ export function Header() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="count">3</span>
-          </a>
+          <span className="count">3</span>
+          </Link>
         </div>
       </div>
     </header>

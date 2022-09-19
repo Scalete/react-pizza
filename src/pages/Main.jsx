@@ -15,7 +15,6 @@ export function Main() {
   const [onLoading, setOnLoading] = React.useState(true);
 
   const { categoryId, sortId, orderId, currentPagination, searchValue } = useSelector((state) => state.filter);
-  
 
   React.useEffect(() => {
     async function fetchData() {
