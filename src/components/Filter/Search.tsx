@@ -1,20 +1,21 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSearchValue } from '../../redux/slices/filterSlice';
+import { useSearchValue } from '../../redux/filter/selectors';
+import { setSearchValue } from '../../redux/filter/slice';
 
 export function Search() {
 
-  const searchRef = React.useRef();
-  const searchValue = useSelector((state) => state.filter.searchValue);
+  const searchRef = React.useRef<HTMLInputElement>(null);
+  const searchValue = useSelector(useSearchValue);
   const dispatch = useDispatch();
 
-  const onSearchInput = (e) => {
+  const onSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchValue(e.target.value));
   };
 
-  const onClearSearch = (search) => {
+  const onClearSearch = (search: HTMLInputElement | null) => {
     dispatch(setSearchValue(''));
-    search.focus();
+    search?.focus();
   };
 
   return (
@@ -37,7 +38,7 @@ export function Search() {
       <input
         ref={searchRef}
         type="text"
-        maxLength="40"
+        maxLength={40}
         onChange={onSearchInput}
         value={searchValue}
         placeholder="Поиск..."

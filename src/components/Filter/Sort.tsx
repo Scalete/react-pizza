@@ -1,15 +1,21 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSortId, setOrderId } from '../../redux/slices/filterSlice';
+import React from 'react'
+import { useDispatch } from 'react-redux';
+import { setSortId, setOrderId } from '../../redux/filter/slice';
+import type { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
-export function Sort() {
+type ActiveFilterFunction = ActionCreatorWithPayload<number, "filter/setSortId"> | ActionCreatorWithPayload<number, "filter/setOrderId">;
+
+type FilterId = {
+  sortId: number,
+  orderId: number
+};
+
+const Sort: React.FC<FilterId> = React.memo(({sortId, orderId}) => {
   const sortData = ['популярности', 'по цене', 'по алфавиту'];
   const sortOrder = ['убыванию', 'возрастанию'];
-
-  const { sortId, orderId } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
-  const renderSortItems = (array, activeElement, setActiveElement) => {
+  const renderSortItems = (array: string[], activeElement: number, setActiveElement: ActiveFilterFunction) => {
     return array.map((item, index) => (
       <li
         key={index}
@@ -38,4 +44,6 @@ export function Sort() {
       </div>
     </div>
   );
-}
+});
+
+export default Sort;

@@ -1,26 +1,28 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId } from '../../redux/slices/filterSlice';
+import { useCategoryId } from '../../redux/filter/selectors';
+import { setCategoryId } from '../../redux/filter/slice';
 
-export function Category() {
+const Category: React.FC = React.memo(() => {
+
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
-  const [activeMobileCategory, setActiveMobileCategory] = React.useState(false);
+  const [activeMobileCategory, setActiveMobileCategory] = React.useState<boolean>(false);
 
-  const categoryId = useSelector((state) => state.filter.categoryId);
+  const categoryId: number = useSelector(useCategoryId);
   const dispatch = useDispatch();
 
   const renderCategories = () => {
     return categories.map((item, index) => (
       <li
         key={index}
-        onClick={() => onClickCategory(index, setActiveMobileCategory)}
+        onClick={() => onClickCategory(index)}
         className={'category-item ' + (categoryId === index ? 'active' : '')}>
         {item}
       </li>
     ));
   };
 
-  const onClickCategory = (index) => {
+  const onClickCategory = (index: number) => {
     dispatch(setCategoryId(index));
     setActiveMobileCategory(false);
   };
@@ -49,4 +51,6 @@ export function Category() {
       </ul>
     </div>
   );
-}
+});
+
+export default Category;
